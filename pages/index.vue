@@ -1,11 +1,11 @@
 <template>
   <div v-editable="story.content" class="page-Index">
     <section class="columns">
-      <ul class="columns-Column columns-ColumnPress">
-        <li>
+      <div class="columns-Column columns-ColumnPress">
+        <div class="columns-Header">
           <p>Press</p>
           <p>filter</p>
-        </li>
+        </div>
         <li v-for="(item, i) in press" :key="i">
           <component
             :is="blok.component | dashify"
@@ -14,12 +14,12 @@
             :blok="blok"
           ></component>
         </li>
-      </ul>
-      <ul class="columns-Column columns-ColumnWork scrollFast">
-        <li>
+      </div>
+      <div class="columns-Column columns-ColumnWork scrollFast">
+        <div class="columns-Header">
           <p>Work</p>
           <p>filter</p>
-        </li>
+        </div>
         <li v-for="(item, i) in work" :key="i">
           <component
             :is="blok.component | dashify"
@@ -28,7 +28,7 @@
             :blok="blok"
           ></component>
         </li>
-      </ul>
+      </div>
       <div class="columns-Column columns-ColumnCalendar scrollSlow">
         <div class="columns-Header">
           <p>Calendar</p>

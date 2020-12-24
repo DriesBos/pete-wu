@@ -23,11 +23,13 @@ export default {
 .header
   position: fixed
   left: 0
-  top: 0
+  bottom: 0
   right: 0
   display: flex
   justify-content: space-between
-  color: white
+  color: $color-black
+  background: $color-white
+  z-index: $index-header
   &-Logo
     padding: 1rem
   &-Nav
