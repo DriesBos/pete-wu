@@ -1,63 +1,91 @@
-importScripts('/_nuxt/workbox.4c4f5ca6.js')
+const options = {"workboxURL":"https://cdn.jsdelivr.net/npm/workbox-cdn@5.1.3/workbox/workbox-sw.js","importScripts":[],"config":{"debug":false},"clientsClaim":true,"skipWaiting":true,"cleanupOutdatedCaches":true,"offlineAnalytics":false,"preCaching":["/?standalone=true"],"runtimeCaching":[{"urlPattern":"/_nuxt/","handler":"CacheFirst","method":"GET","strategyPlugins":[]},{"urlPattern":"/","handler":"NetworkFirst","method":"GET","strategyPlugins":[]}],"offlinePage":null,"pagesURLPattern":"/","offlineStrategy":"NetworkFirst"}
 
-workbox.precaching.precacheAndRoute([
-  {
-    "url": "/_nuxt/app.6cae89a.js",
-    "revision": "aa18ddc579c10eb1a4cd84922e8e3de2"
-  },
-  {
-    "url": "/_nuxt/commons/app.db2a5a5.js",
-    "revision": "68600171a9ef1b722a8ebed51f9b8af9"
-  },
-  {
-    "url": "/_nuxt/pages/_slug.aaad4ce.js",
-    "revision": "1c6bfc89957e54ef7cd14037ddab49ef"
-  },
-  {
-    "url": "/_nuxt/pages/about/index.bd8637f.js",
-    "revision": "cc03c0eb0e5b4648ef855f631bafdae6"
-  },
-  {
-    "url": "/_nuxt/pages/blog/_slug.3d24ae8.js",
-    "revision": "647b13259f96030cccdb0a383a43d6e8"
-  },
-  {
-    "url": "/_nuxt/pages/blog/index.4f4a0e0.js",
-    "revision": "30e37df35c382029dd6a7290679c20b6"
-  },
-  {
-    "url": "/_nuxt/pages/index.de62c60.js",
-    "revision": "fde2ac4c72e07f7db12858469bba7d00"
-  },
-  {
-    "url": "/_nuxt/pages/temp_index.db80d81.js",
-    "revision": "e13c9f704a4307d0b4b6e418a4f66c1a"
-  },
-  {
-    "url": "/_nuxt/pages/TEST_.e9b042f.js",
-    "revision": "48a85b9efc77bc15239c0f899f8637d3"
-  },
-  {
-    "url": "/_nuxt/runtime.d8bc79f.js",
-    "revision": "d6b11aea76ba9dbfd4732cde7ca4e05a"
-  },
-  {
-    "url": "/_nuxt/vendors~app.e79554e.js",
-    "revision": "af45e16cf9ab03fce0c20cff3af7110e"
-  },
-  {
-    "url": "/_nuxt/vendors~pages/about/index.a98530b.js",
-    "revision": "30891ed14876e194c48fbd46922f49bf"
+importScripts(...[options.workboxURL, ...options.importScripts])
+
+initWorkbox(workbox, options)
+workboxExtensions(workbox, options)
+precacheAssets(workbox, options)
+cachingExtensions(workbox, options)
+runtimeCaching(workbox, options)
+offlinePage(workbox, options)
+routingExtensions(workbox, options)
+
+function getProp(obj, prop) {
+  return prop.split('.').reduce((p, c) => p[c], obj)
+}
+
+function initWorkbox(workbox, options) {
+  if (options.config) {
+    // Set workbox config
+    workbox.setConfig(options.config)
   }
-], {
-  "cacheId": "nuxt-storyblok-boilerplate",
-  "directoryIndex": "/",
-  "cleanUrls": false
-})
 
-workbox.clientsClaim()
-workbox.skipWaiting()
+  if (options.cacheNames) {
+    // Set workbox cache names
+    workbox.core.setCacheNameDetails(options.cacheNames)
+  }
 
-workbox.routing.registerRoute(new RegExp('/_nuxt/.*'), workbox.strategies.cacheFirst({}), 'GET')
+  if (options.clientsClaim) {
+    // Start controlling any existing clients as soon as it activates
+    workbox.core.clientsClaim()
+  }
 
-workbox.routing.registerRoute(new RegExp('/.*'), workbox.strategies.networkFirst({}), 'GET')
+  if (options.skipWaiting) {
+    workbox.core.skipWaiting()
+  }
+
+  if (options.cleanupOutdatedCaches) {
+    workbox.precaching.cleanupOutdatedCaches()
+  }
+
+  if (options.offlineAnalytics) {
+    // Enable offline Google Analytics tracking
+    workbox.googleAnalytics.initialize()
+  }
+}
+
+function precacheAssets(workbox, options) {
+  if (options.preCaching.length) {
+    workbox.precaching.precacheAndRoute(options.preCaching, options.cacheOptions)
+  }
+}
+
+function runtimeCaching(workbox, options) {
+  for (const entry of options.runtimeCaching) {
+    const urlPattern = new RegExp(entry.urlPattern)
+    const method = entry.method || 'GET'
+
+    const plugins = (entry.strategyPlugins || [])
+      .map(p => new (getProp(workbox, p.use))(...p.config))
+
+    const strategyOptions = { ...entry.strategyOptions, plugins }
+
+    const strategy = new workbox.strategies[entry.handler](strategyOptions)
+
+    workbox.routing.registerRoute(urlPattern, strategy, method)
+  }
+}
+
+function offlinePage(workbox, options) {
+  if (options.offlinePage) {
+    // Register router handler for offlinePage
+    workbox.routing.registerRoute(new RegExp(options.pagesURLPattern), ({ request, event }) => {
+      const strategy = new workbox.strategies[options.offlineStrategy]
+      return strategy
+        .handle({ request, event })
+        .catch(() => caches.match(options.offlinePage))
+    })
+  }
+}
+
+function workboxExtensions(workbox, options) {
+  
+}
+
+function cachingExtensions(workbox, options) {
+  
+}
+
+function routingExtensions(workbox, options) {
+  
+}

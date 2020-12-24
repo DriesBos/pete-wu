@@ -1,21 +1,17 @@
 <template>
-  <div v-editable="story.content" class="page-Blog_Slug">
-    <component
-      :is="blok.component | dashify"
-      v-for="blok in story.content.body"
-      :key="blok._uid"
-      :blok="blok"
-    ></component>
-  </div>
+  <div></div>
 </template>
 
 <script>
 export default {
   asyncData(context) {
-    let endpoint = "cdn/stories/blog/" + context.params.slug
+    let endpoint = `cdn/stories/blog/${context.params.slug}`
+    let version =
+      context.query._storyblok || context.isDev ? "draft" : "published"
     return context.app.$storyapi
       .get(endpoint, {
-        version: process.env.NODE_ENV == "production" ? "published" : "draft"
+        version: version,
+        cv: context.store.state.cacheVersion
       })
       .then(res => {
         return res.data
@@ -25,7 +21,7 @@ export default {
           console.error(res)
           context.error({
             statusCode: 404,
-            message: "Failed to receive content from api"
+            message: "Failed to receive content form api"
           })
         } else {
           console.error(res.response.data)
@@ -41,10 +37,10 @@ export default {
       story: { content: {} }
     }
   },
-  head() {
-    return {
-      title: this.story.name + " — SITE TITLE"
-    }
-  }
+  mounted() {
+    console.log(this.story)
+  },
+  destroyed() {},
+  methods: {}
 }
 </script>

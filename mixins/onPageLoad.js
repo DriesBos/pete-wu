@@ -16,7 +16,7 @@ export default {
         var targets = document.querySelectorAll(".scrollSlow")
         targets.forEach(el => {
           gsap.to(el, {
-            y: window.innerHeight,
+            y: window.innerHeight / 2,
             ease: "none",
             scrollTrigger: {
               trigger: el,
@@ -33,7 +33,7 @@ export default {
         var titles = document.querySelectorAll(".scrollFast")
         titles.forEach(el => {
           gsap.to(el, {
-            y: -window.innerHeight,
+            y: -window.innerHeight / 2,
             ease: "none",
             scrollTrigger: {
               trigger: el,

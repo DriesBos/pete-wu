@@ -4,6 +4,7 @@
       <ul class="columns-Column columns-ColumnPress">
         <li>
           <p>Press</p>
+          <p>filter</p>
         </li>
         <li v-for="(item, i) in press" :key="i">
           <component
@@ -17,6 +18,7 @@
       <ul class="columns-Column columns-ColumnWork scrollFast">
         <li>
           <p>Work</p>
+          <p>filter</p>
         </li>
         <li v-for="(item, i) in work" :key="i">
           <component
@@ -30,6 +32,7 @@
       <ul class="columns-Column columns-ColumnCalendar scrollSlow">
         <li>
           <p>Calendar</p>
+          <p>filter</p>
         </li>
         <li v-for="(item, i) in calendar" :key="i">
           <p>{{ item.content.text }}</p>
