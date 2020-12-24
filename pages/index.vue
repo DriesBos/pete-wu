@@ -21,12 +21,30 @@
           <p>filter</p>
         </div>
         <li v-for="(item, i) in work" :key="i">
-          <component
-            :is="blok.component | dashify"
-            v-for="blok in item.content.body"
-            :key="blok._uid"
-            :blok="blok"
-          ></component>
+          <div class="columns-ColumnWork_Image">
+            <img
+              v-if="item.cover_image"
+              v-lazy="transformImage(item.cover_image.filename, '1600x0')"
+              :srcset="
+                `${transformImage(item.cover_image.filename, '2880x0')} 2880w, 
+              ${transformImage(item.cover_image.filename, '2560x0')} 2560w, 
+              ${transformImage(item.cover_image.filename, '1920x0')} 1920w, 
+              ${transformImage(item.cover_image.filename, '1680x0')} 1680w, 
+              ${transformImage(item.cover_image.filename, '1280x0')} 1280w,
+              ${transformImage(item.cover_image.filename, '1024x0')} 1024w, 
+              ${transformImage(item.cover_image.filename, '768x0')} 768w`
+              "
+              sizes="100vw"
+              class="lazy"
+              :alt="item.cover_image.name || item.cover_image.title"
+            />
+          </div>
+          <div class="columns-ColumnWork_Title">
+            <h1>{{ item.content.title || item.name }}</h1>
+          </div>
+          <div class="columns-ColumnWork_Excerpt">
+            <Markdown :input="item.content.excerpt" />
+          </div>
         </li>
       </div>
       <div class="columns-Column columns-ColumnCalendar scrollSlow">
@@ -119,6 +137,14 @@ export default {
     console.log("INDEX CALENDAR", this.calendar)
   },
   methods: {
+    transformImage(image, option) {
+      if (!image) return ""
+      if (!option) return ""
+      let imageService = "//img2.storyblok.com/"
+      let pathOne = image.replace("https://a.storyblok.com", "")
+      let pathTwo = pathOne.replace("//a.storyblok.com", "")
+      return imageService + option + pathTwo
+    },
     dateFormating() {
       var array = Array.from(this.calendar)
       array.forEach(el => {

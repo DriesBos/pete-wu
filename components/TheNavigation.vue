@@ -32,6 +32,9 @@ export default {
   z-index: $index-header
   &-Logo
     padding: 1rem
+    h1
+      // font-family: "Windsor"
+      font-size: 2rem
   &-Nav
     ul
       display: flex

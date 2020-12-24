@@ -26,7 +26,10 @@ export default {
       let work = getWork.data.stories.map(bp => {
         return {
           id: bp.slug,
-          content: bp.content
+          content: bp.content,
+          name: bp.name,
+          title: bp.content.title,
+          cover_image: bp.content.cover_image
         }
       })
       commit("work/update", work)
