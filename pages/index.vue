@@ -29,17 +29,29 @@
           ></component>
         </li>
       </ul>
-      <ul class="columns-Column columns-ColumnCalendar scrollSlow">
-        <li>
+      <div class="columns-Column columns-ColumnCalendar scrollSlow">
+        <div class="columns-Header">
           <p>Calendar</p>
           <p>filter</p>
-        </li>
-        <li v-for="(item, i) in calendar" :key="i">
-          <p>{{ item.content.text }}</p>
-          <p>{{ item.content.date }}</p>
-          <p>{{ item.content.location }}</p>
-        </li>
-      </ul>
+        </div>
+        <ul class="">
+          <li
+            v-for="(item, i) in calendarList"
+            :key="i"
+            class="columns-ColumnCalendar_Content"
+          >
+            <div class="columns-ColumnCalendar_Content_Date">
+              <p>{{ item.content.date }}</p>
+            </div>
+            <div class="columns-ColumnCalendar_Content_Title">
+              <p>{{ item.content.text || item.title }}</p>
+            </div>
+            <!-- <div class="columns-ColumnCalendar_Content_Location">
+              <p>{{ item.content.location }}</p>
+            </div> -->
+          </li>
+        </ul>
+      </div>
     </section>
     <component
       :is="story.content.component | dashify"
@@ -83,7 +95,8 @@ export default {
   },
   data() {
     return {
-      story: { content: {} }
+      story: { content: {} },
+      calendarList: []
     }
   },
   head() {
@@ -99,10 +112,22 @@ export default {
     })
   },
   mounted() {
+    this.dateFormating()
     console.log("INDEX", this.story)
     console.log("INDEX WORK", this.work)
     console.log("INDEX PRESS", this.press)
     console.log("INDEX CALENDAR", this.calendar)
+  },
+  methods: {
+    dateFormating() {
+      var array = Array.from(this.calendar)
+      array.forEach(el => {
+        return (el.content.date = el.content.date
+          .slice(0, 10)
+          .replaceAll("-", "."))
+      })
+      this.calendarList = array
+    }
   }
 }
 </script>

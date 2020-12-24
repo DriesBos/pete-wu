@@ -50,6 +50,7 @@ export default {
       let calendar = getCalendar.data.stories.map(bp => {
         return {
           id: bp.slug,
+          title: bp.name,
           content: bp.content
         }
       })

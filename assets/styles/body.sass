@@ -1,3 +1,6 @@
+body
+  background: black
+
 section
   max-width: 100%
   img
@@ -13,23 +16,6 @@ section
 .item
   // border: 1px solid $color-support
   margin: 1rem
-
-header
-  position: fixed
-  left: 0
-  top: 0
-  right: 0
-  width: 100%
-  ul
-    display: flex
-    justify-content: flex-end
-    li
-      padding: 1em .5em
-      cursor: pointer
-    li:last-child
-      padding-right: 1em
-  .nuxt-link-exact-active
-    text-decoration: underline
 
 // Aspect ratio CSS
 .aspectRatioOutside
@@ -68,25 +54,36 @@ header
   &-Column
     margin-left: 1rem
     margin-right: 1rem
-    background: $color
     color: white
-    li:first-child
-      display: flex
-      justify-content: space-between
-      border-bottom: 1px solid white
-      padding: .5rem 1rem
+  &-Header
+    display: flex
+    justify-content: space-between
+    border-bottom: 1px solid currentColor
+    padding: .5rem
   &-ColumnPress
     flex: 1
     flex-grow: 2
     margin-top: 90vh
+    background: $color-three
   &-ColumnWork
     flex: 1
     flex-grow: 3
     margin-top: 85vh
+    background: $color-green
   &-ColumnCalendar
     flex: 1
     flex-grow: 1.5
     margin-top: 95vh
+    background: $color-yellow
+    color: black
+    font-size: 0.8rem
+    &_Content
+      display: flex
+      flex-wrap: nowrap
+      padding: .5rem
+      border-bottom: 1px solid currentColor
+      p
+        padding-right: .5rem
 
 // Important since overriding interactions
 .desktop
