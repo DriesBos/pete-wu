@@ -33,7 +33,7 @@ export default {
         var titles = document.querySelectorAll(".scrollFast")
         titles.forEach(el => {
           gsap.to(el, {
-            y: -window.innerHeight / 2,
+            y: -window.innerHeight,
             ease: "none",
             scrollTrigger: {
               trigger: el,
