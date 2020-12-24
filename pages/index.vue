@@ -2,7 +2,7 @@
   <div v-editable="story.content" class="page-Index">
     <section class="columns">
       <div class="columns-Column columns-ColumnPress">
-        <div class="columns-Header">
+        <div class="columns-Header columns-ColumnPress_Header">
           <p>Press</p>
           <p>filter</p>
         </div>
@@ -20,7 +20,7 @@
         </li>
       </div>
       <div class="columns-Column columns-ColumnWork scrollFast">
-        <div class="columns-Header">
+        <div class="columns-Header columns-ColumnWork_Header">
           <p>Work</p>
           <p>filter</p>
         </div>
@@ -52,7 +52,7 @@
         </li>
       </div>
       <div class="columns-Column columns-ColumnCalendar scrollSlow">
-        <div class="columns-Header">
+        <div class="columns-Header columns-ColumnCalendar_Header">
           <p>Calendar</p>
           <p>filter</p>
         </div>
