@@ -15,7 +15,10 @@ section
   margin: 1rem
 
 header
-  position: relative
+  position: fixed
+  left: 0
+  top: 0
+  right: 0
   width: 100%
   ul
     display: flex
@@ -55,6 +58,32 @@ header
     img
       width: 100%
       height: 100%
+
+.columns
+  display: flex
+  flex-wrap: nowrap
+  margin-left: 2rem
+  margin-right: 2rem
+  &-Column
+    margin-left: 2rem
+    margin-right: 2rem
+    background: $color
+    color: white
+    li:first-child
+      border-bottom: 1px solid white
+      padding: .5rem 1rem
+  &-ColumnPress
+    flex: 1
+    flex-grow: 2
+    margin-top: 90vh
+  &-ColumnWork
+    flex: 1
+    flex-grow: 3
+    margin-top: 85vh
+  &-ColumnCalendar
+    flex: 1
+    flex-grow: 1
+    margin-top: 95vh
 
 // Important since overriding interactions
 .desktop

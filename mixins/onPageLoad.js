@@ -6,8 +6,8 @@ gsap.registerPlugin(ScrollTrigger)
 export default {
   mounted() {
     // this.rotateElement()
-    // this.scrollSlow()
-    // this.scrollFast()
+    this.scrollSlow()
+    this.scrollFast()
     // this.scrollHorizontal()
   },
   methods: {
