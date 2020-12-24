@@ -6,13 +6,17 @@
           <p>Press</p>
           <p>filter</p>
         </div>
-        <li v-for="(item, i) in press" :key="i">
-          <component
-            :is="blok.component | dashify"
-            v-for="blok in item.content.body"
-            :key="blok._uid"
-            :blok="blok"
-          ></component>
+        <li
+          v-for="(item, i) in press"
+          :key="i"
+          class="columns-Item columns-ColumnPress_Item"
+        >
+          <div class="columns-ColumnPress_Title">
+            <h1>"{{ item.content.title }}"</h1>
+          </div>
+          <div class="columns-ColumnPress_Source">
+            <p>{{ item.content.source }}</p>
+          </div>
         </li>
       </div>
       <div class="columns-Column columns-ColumnWork scrollFast">
@@ -20,7 +24,7 @@
           <p>Work</p>
           <p>filter</p>
         </div>
-        <li v-for="(item, i) in work" :key="i">
+        <li v-for="(item, i) in work" :key="i" class="columns-Item">
           <div class="columns-ColumnWork_Image">
             <img
               v-if="item.cover_image"
@@ -56,7 +60,7 @@
           <li
             v-for="(item, i) in calendarList"
             :key="i"
-            class="columns-ColumnCalendar_Content"
+            class="columns-Item columns-ColumnCalendar_Content"
           >
             <div class="columns-ColumnCalendar_Content_Date">
               <p>{{ item.content.date }}</p>
